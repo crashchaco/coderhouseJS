@@ -1,8 +1,10 @@
 let user = prompt("Bienvenidos a su lista de tareas virtual V 1.0 - Ingrese su nombre para comenzar a utilizar el sistema")
 alert("Bienvenido " + user)
 
+	// MSJ BIENVENIDA CON ARRAY
+
 var tiempo=3000
-var contenido=new Array(5)
+var contenido= new Array(5)
 contenido[0]="Bienvenido " + user + " a su Agenda Virtual"
 contenido[1]="Aquí podras agregar tareas y su descripción"
 contenido[2]="Agendar hora y fecha de realización"
@@ -17,9 +19,12 @@ function cambiar_contenido(){
 	indice_contenido++
 	setTimeout("cambiar_contenido()",tiempo)
 }
-
 document.write('<div id="contenedorjs"></div>')
 window.onload=cambiar_contenido
+
+
+	// MSJ AGREGAR TAREAS AL HTML
+
 
 (function () {
 	// Objeto tareas
@@ -31,14 +36,13 @@ const tareas = {
 
 	// Funciones
 
-	var comprobarInput = function () {
+	var comprobarInput = function() {
 		tareaInput.className = "";
 		teareaInput.setAttribute("placeholder", "Agrega tu tarea");
 	};
 
-	var agregarTarea = function () {
+	var agregarTarea = function() {
 		var tarea = tareas.tareaInput.value,
-
 			nuevaTarea = document.createElement("li"),
 			enlace = document.createElement("a"),
 			contenido = document.createTextNode(tarea);
@@ -63,14 +67,13 @@ const tareas = {
 
 		tareas.tareaInput.value = "";
 
-			// Borrando Elementos de la lista
+		// Borrar elementos de la lista
 		for (var i = 0; i <= lista.children.length - 1; i++) {
-			lista.children[i].addEventListener("click", eleminarTarea);
+			lista.children[i].addEventListener("click", eliminarTarea);
 		}
 	};
 
-
-	var eleminarTarea = function () {
+	var eliminarTarea = function () {
 		this.parentNode.removeChild(this);
 	};
 
