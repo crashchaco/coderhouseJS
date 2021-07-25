@@ -3,21 +3,22 @@ alert("Bienvenido " + user)
 
 	// MSJ BIENVENIDA CON ARRAY
 
-var tiempo=3000
-var contenido= new Array(5)
-contenido[0]="Bienvenido " + user + " a su Agenda Virtual"
-contenido[1]="Aquí podras agregar tareas y su descripción"
-contenido[2]="Agendar hora y fecha de realización"
-contenido[3]="Y modificarla cuando quieras, ¡Hasta podrás anexar imagenes, documentos y sonidos!"
-contenido[4]="Que la disfrutes"
-var indice_contenido=0
+function bienvenidaArray(tiempo,contenido,indice_contenido){
+	this.tiempo=tiempo
+	this.contenido=contenido
+	this.indice_contenido=indice_contenido
+}
+
+const saludar = ["Hola bienvenido a su lista de tareas virtual v 1.0", "Aquí podra guardar y planificar su agenda"]
+
+let saludo1 = new bienvenidaArray(3000, saludar, 0)
 
 function cambiar_contenido(){
-	if (indice_contenido>=contenido.length)
-	indice_contenido=0
-	document.getElementById("contenedorjs").innerHTML=contenido[indice_contenido]
-	indice_contenido++
-	setTimeout("cambiar_contenido()",tiempo)
+	if (saludo1.indice_contenido>=saludo1.contenido.length)
+	saludo1.indice_contenido=0
+	document.getElementById("contenedorjs").innerHTML=saludo1.contenido[saludo1.indice_contenido]
+	saludo1.indice_contenido++
+	setTimeout("cambiar_contenido()",saludo1.tiempo)
 }
 document.write('<div id="contenedorjs"></div>')
 window.onload=cambiar_contenido
@@ -67,7 +68,7 @@ const tareas = {
 
 		tareas.tareaInput.value = "";
 
-		// Borrar elementos de la lista
+		// Borrar Elementos de la lista
 		for (var i = 0; i <= lista.children.length - 1; i++) {
 			lista.children[i].addEventListener("click", eliminarTarea);
 		}
