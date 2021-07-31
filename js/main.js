@@ -1,6 +1,3 @@
-let user = prompt("Bienvenidos a su lista de tareas virtual V 1.0 - Ingrese su nombre para comenzar a utilizar el sistema")
-alert("Bienvenido " + user)
-
 	// MSJ BIENVENIDA CON ARRAY
 
 function bienvenidaArray(tiempo,contenido,indice_contenido){
@@ -26,8 +23,8 @@ window.onload=cambiar_contenido
 
 	// MSJ AGREGAR TAREAS AL HTML
 
-
 (function () {
+
 	// Objeto tareas
 const tareas = {
 		lista : document.getElementById("lista"),
@@ -37,16 +34,22 @@ const tareas = {
 
 	// Funciones
 
+	const escribirLocal = (key,value) => (localStorage.setItem(key,JSON.stringify(value)));
+	const leerLocal = (key) => JSON.parse(localStorage.getItem(key)) || false;
+
+	var listadoDeTareas = leerLocal("tareas")||[];
+
 	var comprobarInput = function() {
 		tareaInput.className = "";
 		teareaInput.setAttribute("placeholder", "Agrega tu tarea");
 	};
 
+	
 	var agregarTarea = function() {
-		var tarea = tareas.tareaInput.value,
-			nuevaTarea = document.createElement("li"),
-			enlace = document.createElement("a"),
-			contenido = document.createTextNode(tarea);
+		
+		
+
+		var tarea = tareas.tareaInput.value;
 
 		if (tarea === "") {
 			alert("Debe ingresar una tarea valida");
@@ -55,16 +58,31 @@ const tareas = {
 			return false;
 		}
 
+
+		// PUSH 		//LOCAL STORAGE
+
+		listadoDeTareas.push({nombre : tarea, cantidad : 1})
+		console.log(listadoDeTareas);
+		escribirLocal("tareas",listadoDeTareas)
+		tareas.lista.innerHTML = ""
+		listadoDeTareas.forEach(item => {
+
+		let nuevaTarea = document.createElement("li");
+		let enlace = document.createElement("a");
+		let contenido = document.createTextNode(item.nombre + " " + item.cantidad);
+
 		// Agrega contenido al enlace
 		enlace.appendChild(contenido);
 		// Establece atributo href
 		enlace.setAttribute("href", "#");
 		// Agrega el enlace (a) a la nueva tarea (li)
 		nuevaTarea.appendChild(enlace);
-		// Agrega la nueva tarea a la lista
+ 		// Agrega la nueva tarea a la lista
 		tareas.lista.appendChild(nuevaTarea);
+		})
 
-	// Eventos
+
+aaaaaaaaaaa	// Eventos
 
 		tareas.tareaInput.value = "";
 
@@ -85,3 +103,33 @@ const tareas = {
 	tareas.tareaInput.addEventListener("click", comprobarInput);
 
 }());
+
+// CLASE Tareas
+class tareas {
+	
+	constructor(nombre, cantidad){
+		this.nombre = nombre;
+		this.cantidad = cantidad;
+	}
+	
+}
+
+
+// >>>>>>>>>>>>>>>>>>>>> CLASE Listado Tarea <<<<<<<<<<<<<<<<<<<<<
+
+// DEVUELVE MAP
+
+
+// >>>>>>>>>>>>>>>>>>>>> método para agregar tareas  <<<<<<<<<<<<<<<<<<<<<
+//find - PUSH
+
+
+
+// >>>>>>>>>>>>>>>>>>>>> metodo paara eliminar tareas <<<<<<<<<<<<<<<<<<<<<
+// filter
+
+
+
+
+
+
