@@ -82,7 +82,7 @@ const tareas = {
 		})
 
 
-aaaaaaaaaaa	// Eventos
+// Eventos
 
 		tareas.tareaInput.value = "";
 
