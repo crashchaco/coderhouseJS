@@ -41,7 +41,7 @@ const tareas = {
 
 	var comprobarInput = function() {
 		tareaInput.className = "";
-		teareaInput.setAttribute("placeholder", "Agrega tu tarea");
+		tareaInput.setAttribute("placeholder", "Agrega tu tarea");
 	};
 
 	
