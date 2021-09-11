@@ -6,7 +6,7 @@
 		this.indice_contenido = indice_contenido
 	}
 
-	const saludar = ["Hola bienvenido a su lista de tareas virtual v 1.0", "Aquí podra guardar y planificar su agenda"]
+	const saludar = ["Hola bienvenido a su lista de tareas virtual v 1.0".fontcolor("black"), "Aquí podra guardar y planificar su agenda".fontcolor("black")]
 
 	let saludo1 = new bienvenidaArray(3000, saludar, 0)
 
@@ -75,9 +75,7 @@
 
 			// PUSH 		//LOCAL STORAGE
 
-			listadoDeTareas.push({
-				nombre: tarea
-			})
+			listadoDeTareas.push({nombre: tarea})
 
 			console.log(listadoDeTareas);
 
@@ -113,7 +111,7 @@
 				return Indice;
 			}
 
-			listadoDeTareas = listadoDeTareas.splice(obtenerIndice(tarea), 1);
+			listadoTareas = listadoDeTareas.splice(obtenerIndice(tarea), 1);
 
 			escribirLocal("tareas", listadoDeTareas);
 
@@ -121,7 +119,9 @@
 			console.log(listadoDeTareas);
 
 			// SOBRE-ESCRIBIMOS EL ARRAY SIN EL ELEMENTO ELIMINADO
-			return listadoDeTareas;
+			return listadoTareas;
+
+
 		};
 
 
@@ -177,4 +177,9 @@
 			this.cantidad = cantidad;
 		}
 
+	}
+
+	function tachar() {
+		let decision = prompt("¿quiere finalizar la tarea?")
+		return decision;
 	}
