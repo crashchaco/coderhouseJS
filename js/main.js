@@ -1,185 +1,195 @@
-	// MSJ BIENVENIDA CON ARRAY
+// MSJ BIENVENIDA CON ARRAY
 
-	function bienvenidaArray(tiempo, contenido, indice_contenido) {
-		this.tiempo = tiempo
-		this.contenido = contenido
-		this.indice_contenido = indice_contenido
-	}
+function WelcomeArray(time, content, indice_content) {
+  this.time = time;
+  this.content = content;
+  this.indice_content = indice_content;
+}
 
-	const saludar = ["Hola bienvenido a su lista de tareas virtual v 1.0".fontcolor("black"), "Aquí podra guardar y planificar su agenda".fontcolor("black")]
+const greet = [
+  "Hello welcome to your virtual to-do list v 1.0".fontcolor("black"),
+  "Here you can save and plan your schedule".fontcolor("black"),
+];
 
-	let saludo1 = new bienvenidaArray(3000, saludar, 0)
+let greet1 = new WelcomeArray(3000, greet, 0);
 
-	function cambiar_contenido() {
-		if (saludo1.indice_contenido >= saludo1.contenido.length)
-			saludo1.indice_contenido = 0
-		document.getElementById("contenedorjs").innerHTML = saludo1.contenido[saludo1.indice_contenido]
-		saludo1.indice_contenido++
-		setTimeout("cambiar_contenido()", saludo1.tiempo)
-	}
-	document.write('<div id="contenedorjs"></div>')
-	window.onload = cambiar_contenido
+function change_content() {
+  if (greet1.indice_content >= greet1.content.length) greet1.indice_content = 0;
+  document.getElementById("contenedorjs").innerHTML =
+    greet1.content[greet1.indice_content];
+  greet1.indice_content++;
+  setTimeout("change_content()", greet1.time);
+}
+
+document.write('<div id="contenedorjs"></div>');
+
+window.onload = change_content();
+
+let contenedor = document.getElementById("lista");
+
+// MSJ AGREGAR TAREAS AL HTML
+
+// Objeto tareas con selectores
+const tareas = {
+  tareaInput: document.getElementById("tareaInput"),
+  btnnewTask: document.getElementById("btn-agregar"),
+  // AGREGUÉ EL BOTON PARA QUITAR
+  btnQuitarTarea: document.getElementById("btn-quitar"),
+  // AGREGUÉ EL BOTON PARA ELIMINAR EL HISTORIAL DE TAREAS
+  btnEliminarHistorial: document.getElementById("btn-borrar-historial"),
+};
+
+// Funciones
+
+const writeLocal = (key, value) =>
+  localStorage.setItem(key, JSON.stringify(value));
+
+const readLocal = (key) => JSON.parse(localStorage.getItem(key)) || false;
+
+var taskList = readLocal("tareas") || [];
+
+var CheckInput = function () {
+  tareaInput.className = "";
+  tareaInput.setAttribute("placeholder", "Add Task");
+};
+
+// AGREGAR TAREA TANTO EN ARRAY COMO EN LOCAL STORAGE
+var AddTask = function () {
+  var tarea = tareas.tareaInput.value;
+
+  if (tarea === "") {
+    alert("You must enter a valid task");
+    tareas.tareaInput.setAttribute("placeholder", "Add a valid task");
+    tareas.tareaInput.className = "error";
+    return false;
+  } else {
+    alert("Task added successfully");
+  }
+
+  // PUSH 		//LOCAL STORAGE
+
+  taskList.push({
+    name: tarea,
+  });
+
+  writeLocal("tareas", taskList);
+
+  $("#lista").innerHTML = "";
+};
+
+// QUITAR TAREA TANTO DEL ARRAY COMO DEL LOCAL STORAGE
+
+var RemoveTask = function () {
+  var tarea = tareas.tareaInput.value;
+
+  if (tarea === "") {
+    alert("You must enter a valid task");
+    tareas.tareaInput.setAttribute("placeholder", "Add a valid task");
+    tareas.tareaInput.className = "error";
+    return false;
+  }
+
+  // FUNCION LOCAL PARA OBNTENER EL INDICE DE LA TAREA A ELIMINAR
+  function getIndex(taskName) {
+    var Indice = -1;
+    taskList.filter(function (product, i) {
+      if (product.name === taskName) {
+        Indice = i;
+      } else if (!product.name === taskName) {
+        alert("That task does not exist in our database");
+      }
+    });
+    return Indice;
+  }
+
+  listadoTareas = taskList.splice(getIndex(tarea), 1);
+
+  writeLocal("tareas", taskList);
+
+  // SOBRE-ESCRIBIMOS EL ARRAY SIN EL ELEMENTO ELIMINADO
+  return listadoTareas;
+};
+
+// Agregar Tarea
+tareas.btnnewTask.addEventListener("click", AddTask);
+
+// Quitar Tarea
+tareas.btnQuitarTarea.addEventListener("click", RemoveTask);
+
+// Comprobar Input
+tareas.tareaInput.addEventListener("click", CheckInput);
+
+// Limpiar el Array y el Local Storage
+tareas.btnEliminarHistorial.addEventListener("click", function () {
+  localStorage.clear();
+  taskList.splice(0, taskList.length);
+
+  console.log(taskList);
+});
+
+// CLASE Tareas
+class Tareas {
+  constructor(name, cantidad) {
+    this.name = name;
+    this.cantidad = cantidad;
+  }
+}
+
+function crossOut() {
+  let decision = prompt("Do you want to finish the task?");
+  if (decision == "yes") {
+    alert("Task Deleted");
+  } else {
+    return decision;
+  }
+}
+
+// MOSTRADO DE TAREAS DESDE LOCAL STORAGE
+$("#btn-ver-tareas").click(function () {
+
+  taskList.forEach((item) => {
+    let newTask = document.createElement("li");
+    let link = document.createElement("a");
+    let content = document.createTextNode(item.name);
+
+    // Agrega content al link
+    link.appendChild(content);
+    // Establece atributo href
+    link.setAttribute("href", "#");
+    // Agrega el link (a) a la nueva tarea (li)
+    newTask.appendChild(link);
+    // Agrega la nueva tarea a la lista
+    contenedor.appendChild(newTask);
+  });
+});
+
+
+$(document).ready(function () {
+
+  $("#btn-update").click(function () {
+
+    $("#lista").fadeOut(2000, "linear", function () {
+
+      location.reload();
+
+    })
+  })
+});
+
+
+
+$(document).ready(function () {
+
+  $("#btn-quitar").click(function () {
+
+    $("#lista").fadeOut(2000, "linear", function () {
+
+      location.reload();
+
+    })
+  })
+});
 
 
 
 
-
-
-	let contenedor = document.getElementById("lista");
-
-
-
-	// MSJ AGREGAR TAREAS AL HTML
-
-	(function () {
-
-		// Objeto tareas
-		const tareas = {
-			lista: document.getElementById("lista"),
-			tareaInput: document.getElementById("tareaInput"),
-			btnNuevaTarea: document.getElementById("btn-agregar"),
-			// AGREGUÉ EL BOTON PARA QUITAR
-			btnQuitarTarea: document.getElementById("btn-quitar"),
-			// AGREGUÉ EL BOTON PARA VER LAS TAREAS
-			btnMostrarTareas: document.getElementById("btn-ver-tareas"),
-			// AGREGUÉ EL BOTON PARA ELIMINAR EL HISTORIAL DE TAREAS
-			btnEliminarHistorial: document.getElementById("btn-borrar-historial")
-		}
-
-		// Funciones
-
-		const escribirLocal = (key, value) => (localStorage.setItem(key, JSON.stringify(value)));
-
-		const leerLocal = (key) => JSON.parse(localStorage.getItem(key)) || false;
-
-
-		var listadoDeTareas = leerLocal("tareas") || [];
-
-		var comprobarInput = function () {
-			tareaInput.className = "";
-			tareaInput.setAttribute("placeholder", "Agrega tu tarea");
-		};
-
-
-		// AGREGAR TAREA TANTO EN ARRAY COMO EN LOCAL STORAGE
-		var agregarTarea = function () {
-
-			var tarea = tareas.tareaInput.value;
-
-			if (tarea === "") {
-				alert("Debe ingresar una tarea valida");
-				tareas.tareaInput.setAttribute("placeholder", "Agregar una tarea valida");
-				tareas.tareaInput.className = "error";
-				return false;
-			}
-
-			// PUSH 		//LOCAL STORAGE
-
-			listadoDeTareas.push({nombre: tarea})
-
-			console.log(listadoDeTareas);
-
-			escribirLocal("tareas", listadoDeTareas)
-
-			tareas.lista.innerHTML = "";
-
-		};
-
-		// QUITAR TAREA TANTO DEL ARRAY COMO DEL LOCAL STORAGE
-
-		var quitarTarea = function () {
-
-			var tarea = tareas.tareaInput.value;
-
-			if (tarea === "") {
-				alert("Debe ingresar una tarea valida");
-				tareas.tareaInput.setAttribute("placeholder", "Agregar una tarea valida");
-				tareas.tareaInput.className = "error";
-				return false;
-			}
-
-			// FUNCION LOCAL PARA OBNTENER EL INDICE DE LA TAREA A ELIMINAR
-			function obtenerIndice(nombreTarea) {
-				var Indice = -1;
-				listadoDeTareas.filter(function (producto, i) {
-					if (producto.nombre === nombreTarea) {
-						Indice = i;
-					} else if (!producto.nombre === nombreTarea) {
-						alert("Esa tarea no existe en nuestra base de datos");
-					}
-				});
-				return Indice;
-			}
-
-			listadoTareas = listadoDeTareas.splice(obtenerIndice(tarea), 1);
-
-			escribirLocal("tareas", listadoDeTareas);
-
-			// MOSTRAMOS EL ARRAY RESULTANTE
-			console.log(listadoDeTareas);
-
-			// SOBRE-ESCRIBIMOS EL ARRAY SIN EL ELEMENTO ELIMINADO
-			return listadoTareas;
-
-
-		};
-
-
-		// MOSTRADO DE TAREAS DESDE LOCAL STORAGE
-
-		const verTareas = () => {
-
-			listadoDeTareas.forEach(item => {
-
-				let nuevaTarea = document.createElement("li");
-				let enlace = document.createElement("a");
-				let contenido = document.createTextNode(item.nombre);
-
-				// Agrega contenido al enlace
-				enlace.appendChild(contenido);
-				// Establece atributo href
-				enlace.setAttribute("href", "#");
-				// Agrega el enlace (a) a la nueva tarea (li)
-				nuevaTarea.appendChild(enlace);
-				// Agrega la nueva tarea a la lista
-				contenedor.appendChild(nuevaTarea);
-				
-			})
-		}
-
-		// Agregar Tarea
-		tareas.btnNuevaTarea.addEventListener("click", agregarTarea);
-
-		// Quitar Tarea
-		tareas.btnQuitarTarea.addEventListener("click", quitarTarea);
-
-		// Mostrar Tareas
-		tareas.btnMostrarTareas.addEventListener("click", verTareas);
-
-		// Comprobar Input
-		tareas.tareaInput.addEventListener("click", comprobarInput);
-
-		// Limpiar el Array y el Local Storage
-		tareas.btnEliminarHistorial.addEventListener("click", function () {
-			localStorage.clear();
-			listadoDeTareas.splice(0, listadoDeTareas.length);
-
-			console.log(listadoDeTareas);
-		});
-
-	}());
-
-	// CLASE Tareas
-	class tareas {
-
-		constructor(nombre, cantidad) {
-			this.nombre = nombre;
-			this.cantidad = cantidad;
-		}
-
-	}
-
-	function tachar() {
-		let decision = prompt("¿quiere finalizar la tarea?")
-		return decision;
-	}
