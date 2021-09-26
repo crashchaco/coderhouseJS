@@ -58,13 +58,11 @@ var AddTask = function () {
   var tarea = tareas.tareaInput.value;
 
   if (tarea === "") {
-    alert("You must enter a valid task");
     tareas.tareaInput.setAttribute("placeholder", "Add a valid task");
     tareas.tareaInput.className = "error";
     return false;
   } else {
-    alert("Task added successfully");
-  }
+      }
 
   // PUSH 		//LOCAL STORAGE
 
@@ -83,7 +81,6 @@ var RemoveTask = function () {
   var tarea = tareas.tareaInput.value;
 
   if (tarea === "") {
-    alert("You must enter a valid task");
     tareas.tareaInput.setAttribute("placeholder", "Add a valid task");
     tareas.tareaInput.className = "error";
     return false;
@@ -96,7 +93,6 @@ var RemoveTask = function () {
       if (product.name === taskName) {
         Indice = i;
       } else if (!product.name === taskName) {
-        alert("That task does not exist in our database");
       }
     });
     return Indice;
@@ -136,13 +132,9 @@ class Tareas {
 }
 
 function crossOut() {
-  let decision = prompt("Do you want to finish the task?");
-  if (decision == "yes") {
-    alert("Task Deleted");
-  } else {
     return decision;
   }
-}
+
 
 // MOSTRADO DE TAREAS DESDE LOCAL STORAGE
 $("#btn-ver-tareas").click(function () {
